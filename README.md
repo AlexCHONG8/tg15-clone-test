@@ -22,3 +22,7 @@ Verdict: **REA does not duplicate websites.** It is a binary/app reverse-enginee
 It cannot reconstruct HTML/CSS or produce a runnable copy. The mirror here was built with plain curl + asset crawl, not REA. REA is the right tool for understanding compiled/bundled app internals, not for cloning public pages.
 
 Test artifacts: `rea-bundle-analysis.json` (REA evidence), `rea-original-screenshot.png` (REA capture of the original).
+
+## Mock verify page
+
+`customer/verificar.html` — mobile verify card (Indufar styling) reading `?lote=` (default 66903; parser tolerant of appended `?coord=…&useClipApp=true` junk from the AuthNow app's verbatim `/customer/` URL branch). `customer/qr-66903.png` — QR (error-correction H) encoding `https://alexchong8.github.io/tg15-clone-test/customer/verificar.html?lote=66903`. AuthNow APK REA findings live one level up in `../authnow-rea-findings.md`.

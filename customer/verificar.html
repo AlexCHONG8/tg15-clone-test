@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>Verificación de Autenticidad — T.G. 15</title>
+<meta name="robots" content="noindex,nofollow" />
+<link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet" />
+<link rel="icon" href="../vademecum/public/img/isologo26_90x90px.png" />
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Roboto', Arial, sans-serif;
+    background: #f2f3f4;
+    color: #2d353c;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+  }
+  .card {
+    background: #fff;
+    width: 100%;
+    max-width: 420px;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 24px rgba(45,53,60,.12);
+  }
+  .strip { height: 6px; background: linear-gradient(90deg, #ab8b07, #f59c1a); }
+  .head {
+    display: flex; align-items: center; gap: 12px;
+    padding: 18px 20px 0;
+  }
+  .head img { width: 44px; height: 44px; }
+  .head .brand { font-size: 18px; font-weight: 900; letter-spacing: 1px; }
+  .head .brand small { display: block; font-size: 10px; font-weight: 500; color: #76391a; letter-spacing: 2px; }
+  .head .flag { margin-left: auto; font-size: 11px; color: #4e5c68; border: 1px solid #d8dce0; border-radius: 10px; padding: 2px 8px; }
+  .status { text-align: center; padding: 22px 20px 6px; }
+  .check {
+    width: 84px; height: 84px; margin: 0 auto 12px;
+    border-radius: 50%; background: #e6f4ea;
+    display: flex; align-items: center; justify-content: center;
+    animation: pop .45s cubic-bezier(.2,1.4,.4,1) both;
+  }
+  .check svg { width: 44px; height: 44px; }
+  @keyframes pop { from { transform: scale(0); } to { transform: scale(1); } }
+  .status h1 { font-size: 21px; font-weight: 900; color: #1e8e3e; letter-spacing: .5px; }
+  .status p { font-size: 13px; color: #4e5c68; margin-top: 4px; }
+  .product {
+    display: flex; align-items: center; gap: 14px;
+    margin: 16px 20px 0; padding: 12px;
+    background: #faf7ef; border: 1px solid #f0e6c8; border-radius: 12px;
+  }
+  .product img { width: 88px; height: 88px; object-fit: contain; }
+  .product .name { font-size: 18px; font-weight: 900; }
+  .product .form { font-size: 13px; color: #76391a; font-weight: 500; margin-top: 2px; }
+  .product .pack { font-size: 11px; color: #4e5c68; margin-top: 4px; }
+  .lote {
+    text-align: center; margin: 18px 20px 0;
+    border: 2px dashed #ab8b07; border-radius: 12px; padding: 12px 8px;
+    background: #fffdf5;
+  }
+  .lote .label { font-size: 11px; font-weight: 700; letter-spacing: 3px; color: #ab8b07; }
+  .lote .value { font-size: 34px; font-weight: 900; letter-spacing: 6px; font-family: 'Roboto Mono', 'Courier New', monospace; margin-top: 2px; }
+  .rows { margin: 16px 20px 0; }
+  .row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 10px 2px; border-bottom: 1px solid #eef0f2; font-size: 13px;
+  }
+  .row:last-child { border-bottom: none; }
+  .row .k { color: #4e5c68; }
+  .row .v { font-weight: 700; text-align: right; }
+  .chip { background: #e6f4ea; color: #1e8e3e; border-radius: 8px; padding: 2px 10px; font-size: 12px; font-weight: 700; }
+  .foot { padding: 14px 20px 20px; text-align: center; }
+  .foot a {
+    display: block; background: #2d353c; color: #fff; text-decoration: none;
+    border-radius: 10px; padding: 12px; font-size: 14px; font-weight: 700;
+  }
+  .foot .note { font-size: 10px; color: #9aa4ad; margin-top: 10px; line-height: 1.5; }
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="strip"></div>
+    <div class="head">
+      <img src="../vademecum/public/img/isologo26_90x90px.png" alt="Indufar" />
+      <div class="brand">INDUFAR<small>VERIFICACIÓN</small></div>
+      <span class="flag">🇵🇾 PY</span>
+    </div>
+
+    <div class="status">
+      <div class="check">
+        <svg viewBox="0 0 24 24" fill="none">
+          <path d="M20 6L9 17l-5-5" stroke="#1e8e3e" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <h1>PRODUCTO AUTÉNTICO</h1>
+      <p>El código coincide con un lote registrado de Indufar CISA</p>
+    </div>
+
+    <div class="product">
+      <img src="../public/img/productos/69dcd94e52e40.png" alt="T.G. 15" />
+      <div>
+        <div class="name">T.G. 15</div>
+        <div class="form">Tirzepatida 15 mg / 0,5 mL</div>
+        <div class="pack">SOL. INY X 4 VIALES X 0,5 ML S/J</div>
+      </div>
+    </div>
+
+    <div class="lote">
+      <div class="label">LOTE</div>
+      <div class="value" id="lote">—</div>
+    </div>
+
+    <div class="rows">
+      <div class="row"><span class="k">Estado</span><span class="v"><span class="chip">VERIFICADO ✓</span></span></div>
+      <div class="row"><span class="k">Fecha de verificación</span><span class="v" id="fecha">—</span></div>
+      <div class="row"><span class="k">Fabricante</span><span class="v">Indufar CISA — Paraguay</span></div>
+    </div>
+
+    <div class="foot">
+      <a href="../index.html">Ver ficha del producto</a>
+      <p class="note">Este código fue verificado contra el registro de lotes de Indufar.<br />Prototipo de simulación — no constituye certificación oficial.</p>
+    </div>
+  </div>
+
+<script>
+(function () {
+  var m = (location.search || '').match(/[?&]lote=([^&#?]+)/);
+  document.getElementById('lote').textContent = m ? decodeURIComponent(m[1]) : '66903';
+  try {
+    document.getElementById('fecha').textContent =
+      new Date().toLocaleString('es-PY', {
+        timeZone: 'America/Asuncion',
+        day: '2-digit', month: '2-digit', year: 'numeric',
+        hour: '2-digit', minute: '2-digit'
+      });
+  } catch (e) {
+    document.getElementById('fecha').textContent = new Date().toLocaleString();
+  }
+})();
+</script>
+</body>
+</html>
