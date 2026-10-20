@@ -65,18 +65,32 @@
     padding: 10px 16px; border-radius: 8px; font-size: 12px; max-width: 85%;
     z-index: 6; display: none; word-break: break-all;
   }
+  .status {
+    position: absolute; top: 60px; left: 50%; transform: translateX(-50%);
+    background: #2d353c; border-left: 4px solid #f59c1a;
+    padding: 8px 14px; border-radius: 8px; font-size: 12px; font-weight: 500;
+    z-index: 5; max-width: 85%; text-align: center;
+  }
+  .status.ok { border-left-color: #2e7d32; color: #a5d6a7; }
+  .manual {
+    margin-left: auto; background: #ab8b07; color: #fff; border: none;
+    padding: 8px 14px; border-radius: 8px; font-size: 12px; font-weight: 700;
+    font-family: inherit;
+  }
 </style>
 </head>
 <body>
   <div class="top">
     <img src="../vademecum/public/img/isologo26_90x90px.png" alt="" />
     <span class="t">Escanear código del producto</span>
+    <button class="manual" id="manual">Clave manual</button>
   </div>
 
   <div class="stage">
     <video id="video" playsinline muted></video>
     <div class="frame"><i></i></div>
     <div class="hint">Apunte al código QR del envase<small>T.G. — Tirzepatida · Indufar CISA</small></div>
+    <div class="status" id="status">Buscando código…</div>
     <div class="toast" id="toast"></div>
 
     <div class="msg" id="denied">
@@ -91,14 +105,21 @@
     </div>
   </div>
 
-<script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
+<script src="jsQR.min.js"></script>
 <script>
 (function () {
   var video = document.getElementById('video');
   var toast = document.getElementById('toast');
+  var status = document.getElementById('status');
   var canvas = document.createElement('canvas');
   var ctx = canvas.getContext('2d', { willReadFrequently: true });
   var running = false;
+  var frames = 0;
+
+  function setStatus(text, ok) {
+    status.textContent = text;
+    status.className = 'status' + (ok ? ' ok' : '');
+  }
 
   function showToast(text) {
     toast.textContent = text;
@@ -109,15 +130,18 @@
   function handleContent(text) {
     var m = text.match(/[?&]lote=([^&#?]+)/i);
     if (m) {
+      setStatus('Código detectado: lote ' + decodeURIComponent(m[1]), true);
       if (navigator.vibrate) navigator.vibrate(80);
       location.href = 'verificar.html?lote=' + encodeURIComponent(m[1]);
       return;
     }
     if (/^https?:\/\//i.test(text)) {
+      setStatus('Código detectado, abriendo…', true);
       if (navigator.vibrate) navigator.vibrate(80);
       location.href = text;
       return;
     }
+    setStatus('Código sin lote: ' + text.slice(0, 40), false);
     showToast('Código sin lote: ' + text.slice(0, 60));
   }
 
@@ -132,22 +156,64 @@
       var img = ctx.getImageData(0, 0, canvas.width, canvas.height);
       var code = jsQR(img.data, img.width, img.height, { inversionAttempts: 'dontInvert' });
       if (code && code.data) { handleContent(code.data); return; }
+      frames++;
+      if (frames % 60 === 0) {
+        setStatus('Buscando código… (acercar la imagen / ' + canvas.width + '×' + canvas.height + ')', false);
+      }
+    } else {
+      setStatus('Esperando cámara…', false);
     }
     requestAnimationFrame(tick);
   }
 
-  navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
-    .then(function (stream) {
-      video.srcObject = stream;
-      video.setAttribute('playsinline', 'true');
-      video.play();
-      running = true;
-      requestAnimationFrame(tick);
-    })
-    .catch(function (err) {
-      var denied = err && (err.name === 'NotAllowedError' || err.name === 'PermissionDeniedError');
-      document.getElementById(denied ? 'denied' : 'nocam').classList.add('show');
-    });
+  function start() {
+    if (!window.jsQR) {
+      setStatus('No se pudo cargar el lector QR', false);
+      document.getElementById('nocam').classList.add('show');
+      return;
+    }
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+      setStatus('Cámara no disponible (requiere https)', false);
+      document.getElementById('nocam').classList.add('show');
+      return;
+    }
+    navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment', width: { ideal: 1280 }, height: { ideal: 720 } } })
+      .then(function (stream) {
+        video.srcObject = stream;
+        video.setAttribute('playsinline', 'true');
+        video.play();
+        running = true;
+        requestAnimationFrame(tick);
+      })
+      .catch(function (err) {
+        var denied = err && (err.name === 'NotAllowedError' || err.name === 'PermissionDeniedError');
+        setStatus(denied ? 'Cámara bloqueada' : 'Sin cámara disponible', false);
+        document.getElementById(denied ? 'denied' : 'nocam').classList.add('show');
+      });
+  }
+
+  document.getElementById('manual').addEventListener('click', function () {
+    var v = window.prompt('Código de lote');
+    if (v) location.href = 'verificar.html?lote=' + encodeURIComponent(v.trim());
+  });
+
+  var deep = (location.search || '').match(/[?&]lote=([^&#?]+)/);
+  if (deep) {
+    setStatus('Lote ' + decodeURIComponent(deep[1]) + ' recibido', true);
+    location.replace('verificar.html?lote=' + encodeURIComponent(deep[1]));
+    return;
+  }
+
+  if (window.jsQR) {
+    start();
+  } else {
+    setStatus('Cargando lector QR…', false);
+    var s = document.createElement('script');
+    s.src = 'https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js';
+    s.onload = start;
+    s.onerror = function () { setStatus('No se pudo cargar el lector QR', false); };
+    document.head.appendChild(s);
+  }
 })();
 </script>
 </body>

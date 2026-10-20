@@ -26,3 +26,9 @@ Test artifacts: `rea-bundle-analysis.json` (REA evidence), `rea-original-screens
 ## Mock verify page
 
 `customer/verificar.html` — mobile verify card (Indufar styling) reading `?lote=` (default 66903; parser tolerant of appended `?coord=…&useClipApp=true` junk from the AuthNow app's verbatim `/customer/` URL branch). `customer/qr-66903.png` — QR (error-correction H) encoding `https://alexchong8.github.io/tg15-clone-test/customer/verificar.html?lote=66903`. AuthNow APK REA findings live one level up in `../authnow-rea-findings.md`.
+
+## 2026-10-21 scan fixes
+
+- `customer/qr.html` — NEW phone-side QR target: inline SVG QR (viewBox-correct, error-correction H) sized to `min(100vw-32px, 78vh)` so modules render large and crisp on a phone screen. Root cause of the failed Mac-camera scan: a plain PNG opened in a phone browser renders the QR ~120–180 px wide → Mac webcam capture too small/moiré-affected for jsQR.
+- `customer/welcome.html` — scanner hardening: persistent status pill (`Buscando código…` / `Código detectado…` + capture resolution), local vendored `customer/jsQR.min.js` (CDN only as fallback), `Clave manual` button (camera-free entry), and `?lote=` deep link → jumps straight to the verify card.
+- Verified headless (Playwright + fake camera fed from a 390×844 screenshot of qr.html): decode succeeds with QR at 340/240/160 px in a 640×480 frame.
