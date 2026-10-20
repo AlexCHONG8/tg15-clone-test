@@ -1,0 +1,24 @@
+# T.G. 15 Mirror — Clone Test
+
+Static mirror of the Indufar (Paraguay) vademecum product page for **T.G. 15 (Tirzepatida 15 mg/0.5 mL)**, captured 2026-10-20 for a clone-tooling quality test.
+
+- Original: https://www.indufarverify.com/web/vademecum/productos/detalles/400002533.html
+- Sibling doses: T.G. 5 = 400002516, T.G. 7.5 = 400002525, T.G. 10 = 400002526, T.G. 12.5 = 400002527, T.G. 15 = 400002533
+- Method: raw HTML via curl + asset crawl (CSS/JS/fonts/images referenced by HTML, CSS, and runtime network log). Absolute server paths preserved so `index.html` serves unmodified from repo root.
+- 56 files, ~7 MB. Google Fonts (Roboto, Open Sans, Material Icons) load remotely; all other assets are local.
+- Verified: loads in Chrome with zero console errors; layout, fonts, images, and footer banner match original.
+
+## REA test result
+
+[REA](https://github.com/morluto/rea) (npm `rea-agents` 6.7.0) was tested against the live page via CDP (`rea list-browser-targets` → `rea analyze-web-bundle` → `rea capture-web-screenshot`).
+
+Verdict: **REA does not duplicate websites.** It is a binary/app reverse-engineering suite (Ghidra/Hopper/IDA, Android/iOS/harmony, JS bundle static analysis). For this web target it produced:
+
+- Script inventory with SHA-256 digests (jquery.js, inline page script, app.min.js, moment-with-locales.min.js)
+- One import edge (app.min.js requires jquery), one route (`/`)
+- 8 low-confidence "endpoint candidates" — all false positives from `Cookies.get` string args
+- A 756x413 viewport screenshot (worked)
+
+It cannot reconstruct HTML/CSS or produce a runnable copy. The mirror here was built with plain curl + asset crawl, not REA. REA is the right tool for understanding compiled/bundled app internals, not for cloning public pages.
+
+Test artifacts: `rea-bundle-analysis.json` (REA evidence), `rea-original-screenshot.png` (REA capture of the original).
