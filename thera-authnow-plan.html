@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#2A2622">
+<title>AuthNow 商业模式与 Thera 启动方案 · 2026-10</title>
+<style>
+  :root{
+    --paper:#F5F0E8; --paper2:#EFE8DC; --wash:#F0E2D8;
+    --ink:#191919; --ink2:#3D3833; --ink3:#5C554C;
+    --terra:#8F4C2C; --terra-lt:#CC785C; --rule:#DCD3C1; --rule2:#BFB39C;
+    --navy:#0E2233; --navy-lt:#2C4A66;
+    --green:#2F7D5B; --red:#A8423C;
+    --serif:"Songti SC","Noto Serif SC","Source Han Serif SC",Georgia,"Times New Roman",serif;
+    --sans:"PingFang SC","Noto Sans SC","Hiragino Sans GB","Microsoft YaHei",system-ui,sans-serif;
+    --mono:"SFMono-Regular",Menlo,Consolas,"Liberation Mono",monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%;background:#2A2622;overflow:hidden}
+  body{font-family:var(--sans);color:var(--ink);-webkit-font-smoothing:antialiased}
+
+  .eyebrow{font-family:var(--mono);font-size:16px;letter-spacing:.22em;
+    text-transform:uppercase;color:var(--terra);margin-bottom:10px;font-weight:600}
+  h2{font-family:var(--serif);font-size:48px;line-height:1.12;font-weight:700;
+    letter-spacing:-.01em;margin-bottom:14px}
+  h2.tight{margin-bottom:6px}
+  .sub{font-size:21px;color:var(--ink3);line-height:1.45;margin-bottom:14px;max-width:1500px}
+  .body{flex:1;min-height:0;display:flex;flex-direction:column;gap:12px}
+  h3{font-size:26px;font-weight:700;line-height:1.25;margin-bottom:6px}
+  .body > h3:first-child{margin-top:0}
+
+  .card{background:#FFFDF8;border:1px solid var(--rule);padding:16px 22px}
+  .card h3{color:var(--ink);margin-bottom:6px}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;flex:1;min-height:0}
+  .grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;flex:1;min-height:0}
+  .col{display:flex;flex-direction:column;gap:12px;min-height:0}
+  /* KPI grid: all cards equal height, val baselines aligned per row */
+  .row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;flex:1;min-height:0}
+  .row3 > .col{display:flex;flex-direction:column;gap:12px;min-height:0}
+  .row3 .kpi{flex:1}
+  .row3 .kpi .hint{margin-top:auto}
+  /* 2x2 quadrants: flat grid, both split lines straight (never nest col>flex:1) */
+  .g22{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;
+    grid-auto-flow:column;gap:14px;flex:1;min-height:0}
+  .g22 > *{min-width:0;min-height:0;display:flex;flex-direction:column}
+  .g22 .say{justify-content:center}
+
+  ul{list-style:none;display:flex;flex-direction:column;gap:8px}
+  li{font-size:21px;line-height:1.42;padding-left:26px;position:relative;color:var(--ink2)}
+  li::before{content:"";position:absolute;left:2px;top:.62em;width:11px;height:2px;
+    background:var(--terra)}
+  li b,li strong{color:var(--ink);font-weight:700}
+
+  table{width:100%;border-collapse:collapse;font-size:21px}
+  th{text-align:left;font-family:var(--mono);font-size:16px;letter-spacing:.10em;
+    text-transform:uppercase;color:var(--ink3);font-weight:600;
+    padding:9px 14px;border-bottom:2px solid var(--ink)}
+  td{padding:10px 14px;border-bottom:1px solid var(--rule);line-height:1.4;
+    vertical-align:top;color:var(--ink2)}
+  tr:last-child td{border-bottom:1px solid var(--rule2)}
+  .num{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums}
+  .kw{font-family:var(--mono);font-size:22px;color:var(--terra);font-weight:600}
+  .total td{font-weight:700;color:var(--ink);background:var(--wash)}
+
+  .band{background:var(--ink);color:#F7F4EF;padding:16px 22px}
+  .band h3{color:#F7F4EF}
+  .band p,.band li{color:#EDE7DD}
+  .band b,.band strong,.band li b,.band li strong{color:#FFFFFF}
+  .band .kw{color:#E8A87C}
+
+  .say{background:var(--wash);border-top:3px solid var(--terra);padding:16px 22px}
+  .say .lbl{font-family:var(--mono);font-size:16px;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--terra);font-weight:600;display:block;margin-bottom:7px}
+  .say p{font-size:21px;line-height:1.45;color:var(--ink);font-style:normal}
+
+  .stop{border-top:3px solid var(--terra);background:#FFFDF8;padding:14px 20px}
+  .stop .n{font-family:var(--serif);font-size:30px;color:var(--terra);
+    font-weight:700;line-height:1;margin-bottom:5px}
+  .stop p{font-size:21px;line-height:1.4;color:var(--ink2)}
+  .stop h3{margin-bottom:3px}
+
+  .kpi{display:flex;flex-direction:column;gap:4px;padding:14px 18px;
+    background:#FFFDF8;border:1px solid var(--rule)}
+  .kpi .lbl{font-family:var(--mono);font-size:14px;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--ink3);font-weight:600}
+  .kpi .val{font-family:var(--serif);font-size:36px;line-height:1.05;color:var(--ink);font-weight:700}
+  .kpi .unit{font-family:var(--mono);font-size:16px;color:var(--terra);margin-left:4px}
+  .kpi .hint{font-size:16px;color:var(--ink3);line-height:1.35}
+
+  .row{display:flex;gap:16px}
+  .row > *{flex:1;min-width:0}
+
+  .check{font-family:var(--mono);color:var(--green);font-weight:700;margin-right:6px}
+  .warn{font-family:var(--mono);color:#B5762C;font-weight:700;margin-right:6px}
+  .lock{font-family:var(--mono);color:var(--navy);font-weight:700;margin-right:6px}
+
+  .pill{display:inline-block;padding:4px 12px;border:1px solid var(--terra);
+    color:var(--terra);font-family:var(--mono);font-size:16px;letter-spacing:.1em;
+    text-transform:uppercase;font-weight:600;margin-right:8px}
+
+  .cover{background:var(--ink);justify-content:center;padding:0 130px}
+  .cover h1{font-family:var(--serif);font-size:92px;line-height:1.08;
+    color:#F7F4EF;font-weight:700;letter-spacing:-.015em;margin-bottom:22px}
+  .cover .lede{font-size:28px;line-height:1.5;color:#CFC7BB;max-width:1380px}
+  .cover .rule{width:150px;height:5px;background:var(--terra-lt);margin:30px 0}
+  .cover .meta{display:flex;gap:52px;margin-top:36px;flex-wrap:wrap}
+  .cover .meta div{font-family:var(--mono);font-size:19px;color:#A79E92}
+  .cover .meta b{display:block;color:#E8A87C;font-size:24px;margin-top:6px;font-weight:600}
+  .conf{position:absolute;top:44px;left:130px;font-family:var(--mono);font-size:19px;
+    letter-spacing:.2em;color:#E8A87C;font-weight:600}
+
+  .toc{display:grid;grid-template-columns:1fr 1fr;gap:7px 40px;flex:1;align-content:start;overflow:hidden}
+  .toc button{display:flex;gap:18px;align-items:baseline;background:none;border:0;
+    border-bottom:1px solid var(--rule);padding:8px 4px;text-align:left;cursor:pointer;
+    font-family:inherit;color:var(--ink);transition:background .15s}
+  .toc button:hover{background:var(--wash)}
+  .toc .n{font-family:var(--mono);font-size:17px;color:var(--terra);font-weight:600;min-width:34px}
+  .toc .t{font-size:20px;line-height:1.28}
+
+  html,body{height:100%;overflow:hidden;background:#2A2622;margin:0}
+  :root{--s:1}
+
+  #scroll{
+    height:100vh;height:100dvh;width:100vw;
+    display:flex;flex-direction:row;flex-wrap:nowrap;
+    overflow-x:auto;overflow-y:hidden;
+    scroll-snap-type:x mandatory;
+    scroll-behavior:auto;
+    -webkit-overflow-scrolling:touch;
+    touch-action:pan-x pinch-zoom;overscroll-behavior:contain;
+    -webkit-user-select:none;user-select:none;
+    -webkit-tap-highlight-color:transparent;
+    cursor:grab;
+    scrollbar-width:none;
+  }
+  #scroll::-webkit-scrollbar{height:0;display:none}
+  #scroll.dragging{cursor:grabbing;scroll-behavior:auto;scroll-snap-type:none}
+  #scroll.freescroll{scroll-behavior:auto;scroll-snap-type:none}
+
+  .page{
+    flex:0 0 100vw;width:100vw;height:100vh;height:100dvh;
+    scroll-snap-align:start;scroll-snap-stop:always;
+    overflow:hidden;position:relative;
+    background:var(--paper);
+  }
+  .page > .canvas{
+    position:absolute;top:0;left:0;
+    width:1920px;height:1080px;
+    transform-origin:top left;
+    transform:translate(calc((100vw - 1920px * var(--s)) / 2),
+                      calc((100vh - 1080px * var(--s)) / 2))
+              scale(var(--s));
+    display:flex;flex-direction:column;
+    padding:36px 60px 80px;box-sizing:border-box;
+  }
+  .page.cover{background:var(--ink)}
+  .page.cover > .canvas{padding:0 130px;justify-content:center}
+  .page .canvas > .body{flex:1;min-height:0}
+
+  .page::after{
+    content:"";position:absolute;top:0;right:0;width:1px;height:100%;
+    background:rgba(0,0,0,.10);pointer-events:none;
+  }
+  .page:last-child::after{display:none}
+
+  .arrow{
+    position:fixed;bottom:14px;
+    width:50px;height:50px;border-radius:50%;
+    border:2px solid var(--rule2);background:rgba(255,253,248,.95);
+    color:var(--ink);font-size:22px;line-height:1;cursor:pointer;z-index:90;
+    display:grid;place-items:center;padding-bottom:4px;transition:.15s;
+    touch-action:manipulation;
+    box-shadow:0 3px 14px rgba(0,0,0,.16);
+  }
+  .arrow:hover{background:var(--ink);color:#F7F4EF;border-color:var(--ink)}
+  .arrow:disabled{opacity:.25;cursor:default}
+  .arrow:disabled:hover{background:rgba(255,253,248,.95);color:var(--ink);border-color:var(--rule2)}
+  #prev{left:20px} #next{right:20px}
+
+  #dots{
+    position:fixed;bottom:22px;left:50%;transform:translateX(-50%);
+    display:flex;align-items:center;gap:9px;z-index:90;
+    background:rgba(42,38,34,.78);padding:8px 14px;border-radius:24px;
+    backdrop-filter:blur(4px);
+  }
+  #dots .d{width:10px;height:10px;border-radius:50%;border:2px solid #BFB39C;
+    background:transparent;cursor:pointer;padding:0;transition:.15s}
+  #dots .d:hover{border-color:#E8A87C;transform:scale(1.3)}
+  #dots .d.on{background:#E8A87C;border-color:#E8A87C}
+  #dots .edge{background:none;border:0;cursor:pointer;color:#CFC7BB;
+    font-size:20px;padding:0 6px;line-height:1;font-family:var(--mono)}
+  #dots .edge:hover{color:#E8A87C}
+
+  #pageno{position:fixed;bottom:26px;right:78px;font-family:var(--mono);font-size:19px;
+    color:#CFC7BB;z-index:90;font-variant-numeric:tabular-nums}
+  #pageno b{color:#E8A87C;font-weight:600}
+  #hint{position:fixed;bottom:30px;left:78px;font-family:var(--mono);font-size:15px;
+    color:#A79E92;z-index:90;letter-spacing:.06em}
+
+  #bar{position:fixed;top:0;left:0;height:4px;background:var(--terra-lt);
+    z-index:95;width:0;transition:width .18s}
+
+  #rotate-hint{display:none;position:fixed;top:10px;left:50%;transform:translateX(-50%);
+    z-index:96;background:rgba(42,38,34,.85);color:#F7F4EF;font-family:var(--mono);
+    font-size:14px;letter-spacing:.08em;padding:8px 16px;border-radius:18px;
+    pointer-events:none;white-space:nowrap}
+  #dots button{touch-action:manipulation}
+  @media (max-width:820px),(max-height:500px){
+    #dots{display:none}
+    #hint{display:none}
+    #pageno{right:78px;bottom:24px;font-size:15px}
+    .page{overflow-y:auto;touch-action:pan-x pan-y pinch-zoom;scrollbar-width:none}
+    .page::-webkit-scrollbar{width:0;height:0;display:none}
+    .page > .canvas{
+      transform:translate(calc((100vw - 1920px * var(--s)) / 2),0)
+                scale(var(--s));
+    }
+    .arrow{width:46px;height:46px;font-size:20px;bottom:12px}
+    #prev{left:12px}#next{right:12px}
+  }
+  @media (orientation:portrait) and (max-width:820px){
+    #rotate-hint{display:block}
+  }
+
+  /* ---- alignment pass ---- */
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .row > *{min-width:0}
+  .row.grow{flex:1;min-height:0}
+  .row.grow > *{display:flex;flex-direction:column}
+  .row.grow .stop p{flex:1}
+  .row.grow .say{display:flex;flex-direction:column;justify-content:center}
+  .body > table{flex:1}
+  .grid2 > .col{justify-content:space-between}
+  .col > .card{flex:1}
+  .col > .stop{flex:1;display:flex;flex-direction:column}
+  .col > .stop p:last-child{flex:1}
+  .grid2 .col > table{flex:1}
+
+  @media print{
+    html,body{height:auto;overflow:visible;background:#fff}
+    #scroll{display:block;height:auto;width:auto;overflow:visible}
+    #bar,.arrow,#dots,#pageno,#hint{display:none!important}
+    .page{flex:none;width:1920px;height:1080px;padding:0;page-break-after:always;
+      break-after:page;overflow:visible}
+    .page:last-of-type{page-break-after:auto;break-after:auto}
+    .page > .canvas{transform:none!important;margin:0}
+    .page::after{display:none}
+    @page{size:1920px 1080px;margin:0}
+  }
+
+</style>
+</head>
+<body>
+
+<div id="bar"></div>
+
+<div id="scroll">
+
+  <!-- 1 · COVER -->
+  <section class="page cover">
+    <div class="conf">内部文件 · SUMMED BD · 2026</div>
+    <h1>AuthNow 商业模式分析<br>与 Thera 验证项目启动方案</h1>
+    <div class="rule"></div>
+    <p class="lede">基于 Indufar T.G. 15 产品验证流程的完整克隆模拟（2026-10-20/21 真机实证），推断 AuthNow 收入模型，并给出 Thera 品牌以 AuthNow 路线启动的完整流程、谈判红线与 Pilot 验收标准。</p>
+    <div class="meta">
+      <div>依据<b>T.G. 15 克隆实证</b></div>
+      <div>品牌<b>Thera（自有）</b></div>
+      <div>量级<b>5k 试点 → 200k/月</b></div>
+      <div>日期<b>2026-10-21 · v1</b></div>
+    </div>
+  </section>
+
+  <!-- 2 · CONTENTS -->
+  <section class="page">
+    <div class="eyebrow">目录</div>
+    <h2>本册共 9 页</h2>
+    <div class="body"><div class="toc" id="toc"></div></div>
+  </section>
+
+  <!-- 3 · 尽调基础 -->
+  <section class="page">
+    <div class="eyebrow">01 · 尽调基础</div>
+    <h2>T.G. 15 克隆模拟已完成 —— 三项实证结论</h2>
+    <div class="sub">对 Indufar（巴拉圭）T.G. 15 替尔泊肽验证体系做全流程攻击模拟，形成对 AuthNow 技术底座的独立判断。全部证据留档。</div>
+    <div class="body">
+      <div class="grid2">
+        <div class="col">
+          <table>
+            <tr><th>测试项</th><th>结果</th><th>含义</th></tr>
+            <tr><td><b>App 内 URL 注入</b></td><td><span class="warn">!</span>已复现</td><td><code>/customer/</code> 子串校验无域名检查，任意网页可注入其 App 展示</td></tr>
+            <tr><td><b>App 克隆</b></td><td><span class="warn">!</span>3 小时完成</td><td>同图标、同名称、同界面假 App 真机运行，用户无法分辨</td></tr>
+            <tr><td><b>App 自身扫码</b></td><td><span class="check">✓</span>被拦截</td><td>服务器端校验码格式，非 AuthNow 码被拒</td></tr>
+            <tr><td><b>系统扫码 → 浏览器</b></td><td><span class="check">✓</span>正常</td><td>App Links 仅认领 an4.me 系域名</td></tr>
+            <tr class="total"><td>结论</td><td colspan="2">第三方 App 无法作为信任锚 —— 无完整性校验、代码质量存疑</td></tr>
+          </table>
+          <div class="card">
+            <h3>证据清单（留档）</h3>
+            <ul>
+              <li><b>逆向报告</b>：authnow-rea-findings.md（jadx + apktool）</li>
+              <li><b>注入证据</b>：authnow-bypass-proof.png 等 5 张真机截图</li>
+              <li><b>克隆样本</b>：AuthNow-clone.apk（Vivo V2359A 实机安装运行）</li>
+            </ul>
+          </div>
+        </div>
+        <div class="col">
+          <div class="band">
+            <h3><span class="pill">谈判资本</span>为什么先做模拟</h3>
+            <p>这三项实证 = 与 AuthNow 谈判的<b>全部筹码</b>：压价依据、合同修复条款依据、以及"是否自建"的决策依据。<b>先测后谈，拿着证据上桌。</b></p>
+          </div>
+          <div class="say"><span class="lbl">关键判断</span>
+            <p>漏洞报告暂不公开披露，仅作合同谈判与限期修复条款使用。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 · 收入模型 -->
+  <section class="page">
+    <div class="eyebrow">02 · 收入模型</div>
+    <h2>AuthNow 如何赚钱 —— 四层收入结构（推断）</h2>
+    <div class="sub">官网无任何公开定价（纯 Contact Us 漏斗），但技术指纹暴露模式：authnow.net 为 WordPress + WooCommerce 电商站，即<b>在线直接销售实体 serialized QR 标签</b>。</div>
+    <div class="body">
+      <div class="grid2">
+        <div class="col">
+          <table>
+            <tr><th>收入流</th><th>内容</th><th>行业基准</th></tr>
+            <tr><td><b>① QR 标签销售</b></td><td>预编码不干胶标签，客户贴于包装；WooCommerce 在线下单</td><td class="num">$0.02–0.10/枚</td></tr>
+            <tr><td><b>② 平台订阅</b></td><td>仪表盘、serial 管理、数据分析（SaaS 月/年费）</td><td class="num">待询价</td></tr>
+            <tr><td><b>③ 部署接码费</b></td><td>上线服务、标签设计对接、批次导入</td><td class="num">一次性</td></tr>
+            <tr><td><b>④ 按量计费</b></td><td><span class="warn">!</span>验证次数超额费 —— 结构性风险（下页）</td><td class="num">待确认</td></tr>
+          </table>
+          <div class="card">
+            <h3>佐证信号</h3>
+            <ul>
+              <li><b>区域定位</b>：宣称服务南美消费品牌（Indufar 即客户），低门槛贴标模式</li>
+              <li><b>公司信息</b>：Miami, FL · contact@authnow.net · +1 786 738 9404</li>
+              <li><b>基准参照</b>：ScanTrust / Scribos / SICPA 同类按枚计价模式</li>
+            </ul>
+          </div>
+        </div>
+        <div class="col">
+          <div class="row" style="flex:1">
+            <div class="kpi"><div class="lbl">标签单枚基准</div><div class="val">$0.02–0.10<span class="unit">/枚</span></div><div class="hint">行业同类 serialized secure QR 公开区间</div></div>
+            <div class="kpi"><div class="lbl">200k 枚/月 标签成本</div><div class="val">$4k–20k<span class="unit">/月</span></div><div class="hint">仅标签流，未含订阅与按量</div></div>
+          </div>
+          <div class="say"><span class="lbl">确认方法</span>
+            <p>一封询价邮件即可拿到真实价格表 —— 模板见第 8 页。询价口径按 5k 试点 + 200k/月量产。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 · 计费风险 -->
+  <section class="page">
+    <div class="eyebrow">02 · 计费模式</div>
+    <h2>按次计费 = 结构性风险 —— 绝不接受</h2>
+    <div class="sub">假设场景：$1/验证（1,000 次 = $1,000）。三个问题叠加，任何一条都足以否决该模式。</div>
+    <div class="body">
+      <div class="row grow">
+        <div class="stop"><div class="n">①</div>
+          <h3>配额 = 免费攻击武器</h3>
+          <p>产品 QR 是<b>公开 URL</b>（an4.me/c/码），脚本可自动化刷真码烧配额。攻击者零成本，<b>每次攻击扫描我方付费</b>。</p></div>
+        <div class="stop"><div class="n">②</div>
+          <h3>配额耗尽行为不明</h3>
+          <p>停显批次信息？正品显示"无法验证"？超额账单？三种结果都不利 —— <b>最坏 = 假货商烧光配额，让真货看起来像假货</b>。</p></div>
+        <div class="stop"><div class="n">③</div>
+          <h3>激励倒挂</h3>
+          <p>防伪做得越好、买家验证越勤，费用越高 —— <b>验证成功变成成本中心</b>，而不是品牌资产。</p></div>
+      </div>
+      <div class="row">
+        <div class="kpi"><div class="lbl">按次模式年成本（30k 次/月）</div><div class="val">$360k<span class="unit">+/年</span></div><div class="hint">未计攻击流量，上限不可控</div></div>
+        <div class="kpi"><div class="lbl">Thera 自建同等量级</div><div class="val">≈$200<span class="unit">/月</span></div><div class="hint">云服务运行成本，详见架构文档</div></div>
+        <div class="kpi"><div class="lbl">谈判红线</div><div class="val">Flat<span class="unit">only</span></div><div class="hint">只接受按枚/按年平价授权，拒绝按 scan</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6 · 启动流程 P0-P2 -->
+  <section class="page">
+    <div class="eyebrow">03 · 启动流程</div>
+    <h2>Thera × AuthNow 路线 —— 前段：决策 · 接触 · 尽调</h2>
+    <div class="body">
+      <div class="row grow">
+        <div class="stop"><div class="n">P0</div>
+          <h3>内部决策（1 周）</h3>
+          <p>自建 vs 授权对表决策（参照《Thera 验证体系架构方案》）。预设：<b>若客户指定或要求快速上市 → AuthNow 路线启动</b>；否则自建优先。</p></div>
+        <div class="stop"><div class="n">P1</div>
+          <h3>询价接触（1 周）</h3>
+          <p>发送询价邮件（第 8 页模板）至 contact@authnow.net，抄送电话跟进。口径：5k 试点 + 200k/月。要求<b>四项费用全部书面报价</b>。</p></div>
+        <div class="stop"><div class="n">P2</div>
+          <h3>安全尽调（2 周，并行）</h3>
+          <p>① 提交 <b>/customer/ 漏洞报告</b>，要求书面修复时间表；② 索要 App 完整性路线（Play Integrity）；③ 书面确认企业功能：码生命周期、验证次数、地理告警、自定义域名。</p></div>
+      </div>
+      <div class="say"><span class="lbl">阶段闸门</span>
+        <p>P2 三项全部书面满足才进 P3 谈判；任何一项含糊或拒绝 → 触发自建路线（Phase 1+2 约 5 周可上线）。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7 · 启动流程 P3-P5 -->
+  <section class="page">
+    <div class="eyebrow">03 · 启动流程</div>
+    <h2>后段：谈判 · 试点 · 量产</h2>
+    <div class="body">
+      <div class="row grow">
+        <div class="stop"><div class="n">P3</div>
+          <h3>合同谈判（2 周）</h3>
+          <p>红线：<b>① 拒绝按 scan 计费</b>；② 漏洞限期修复写入合同；③ 数据归属我方 + 退出条款（serial 库全量导出）；④ SLA 与降级响应书面定义。</p></div>
+        <div class="stop"><div class="n">P4</div>
+          <h3>Pilot（4 周）</h3>
+          <p>1 批 5,000 枚，巴拉圭市场。按下页验收矩阵全项测试；同步跑真机攻击回归（复测 /customer/ 修复）。</p></div>
+        <div class="stop"><div class="n">P5</div>
+          <h3>量产集成（4 周）</h3>
+          <p>标签设计定稿（防伪底纹 + 变量 QR）；<b>按订单生成码段</b>、出货激活、60 天有效期配置；异常告警接入。</p></div>
+      </div>
+      <div class="grid3">
+        <div class="card"><h3>验收 · 功能</h3>
+          <ul><li>每枚独立 serial，验证返回批次+有效期</li><li>同码二次验证显示次数与首验时间</li></ul></div>
+        <div class="card"><h3>验收 · 安全</h3>
+          <ul><li>/customer/ 注入复测 = 拦截</li><li>克隆 App 无法获得"正品"响应</li></ul></div>
+        <div class="card"><h3>验收 · 运营</h3>
+          <ul><li>码段按订单发放、未出货可冻结</li><li>验证数据后台可导出</li></ul></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8 · 询价邮件 -->
+  <section class="page">
+    <div class="eyebrow">04 · 工具</div>
+    <h2>询价邮件模板（英文，可直接发送）</h2>
+    <div class="body">
+      <div class="grid2">
+        <div class="col">
+          <div class="card" style="flex:1">
+            <h3>Draft — RFQ to AuthNow</h3>
+            <div style="font-family:var(--mono);font-size:16px;line-height:1.55;color:var(--ink2);white-space:pre-wrap">To: contact@authnow.net
+Subject: RFQ — Serialized QR Verification for Injectable Pen Line
+
+Dear AuthNow team,
+
+We are Summed Medtech, a medical device manufacturer
+launching a new injectable pen brand (Thera) and
+evaluating serialized QR verification.
+
+Please quote in writing:
+
+1. Per-label cost — serialized QR stickers,
+   pilot 5,000 units, then 200,000 units/month
+2. Platform subscription — dashboard, serial
+   lifecycle management, analytics
+3. Deployment / onboarding fee
+4. Verification fees, if any — per-scan or
+   usage-based charges, and what happens when
+   quotas are exceeded
+
+Also confirm support for:
+· Per-order serial ranges with activation on
+  shipment and deactivation of returns
+· 60-day validity window after first verification
+· Verification count / first-verification
+  feedback shown to consumers
+· Geographic anomaly alerts
+· Custom verification domain (verify.thera.com)
+
+Timeline: pilot within 8 weeks. A security
+assessment of your platform is part of our
+evaluation; findings can be shared under NDA.
+
+Best regards,
+Alex Chong — BD Director, Summed Medtech
+alex.chong@summed-medtech.com</div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="band">
+            <h3><span class="pill">要点</span>邮件设计的三个钩子</h3>
+            <p><b>① 第 4 条</b>逼出按次计费是否存在及配额行为 —— 这是全案最重要的未知数。<b>② 功能确认清单</b>对应架构方案五层防御，缺项即谈判差距。<b>③ "安全评估可共享"</b>暗示我们持有筹码，为 P2 漏洞报告铺路。</p>
+          </div>
+          <div class="say"><span class="lbl">纪律</span>
+            <p>邮件不提 T.G. 15、不提克隆测试细节；漏洞仅在 NDA 下、正式尽调阶段披露。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9 · 时间线与结论 -->
+  <section class="page">
+    <div class="eyebrow">05 · 结论</div>
+    <h2>时间线与决策建议</h2>
+    <div class="body">
+      <div class="grid2">
+        <div class="col">
+          <table>
+            <tr><th>阶段</th><th>内容</th><th class="num">周</th></tr>
+            <tr><td><b>P0 决策</b></td><td>自建 vs 授权对表，管理层拍板</td><td class="num">W1</td></tr>
+            <tr><td><b>P1 询价</b></td><td>RFQ 发送 + 电话跟进</td><td class="num">W1–2</td></tr>
+            <tr><td><b>P2 尽调</b></td><td>漏洞报告 + 功能书面确认（并行）</td><td class="num">W2–4</td></tr>
+            <tr><td><b>P3 谈判</b></td><td>四红线入合同</td><td class="num">W4–6</td></tr>
+            <tr><td><b>P4 Pilot</b></td><td>5k 枚 + 验收矩阵 + 攻击回归</td><td class="num">W6–10</td></tr>
+            <tr class="total"><td><b>P5 量产</b></td><td>标签定稿 + 码段集成 + 告警上线</td><td class="num">W10–14</td></tr>
+          </table>
+        </div>
+        <div class="col">
+          <div class="band">
+            <h3><span class="pill">建议</span>双轨并行</h3>
+            <p>AuthNow 按本册流程推进（14 周到量产）；同步保留自建路线（5 周可上线 Phase 1+2）。P2 闸门不通过、或 P3 红线被拒 → <b>立即切自建，证据已备齐</b>。</p>
+          </div>
+          <div class="say"><span class="lbl">一句话结论</span>
+            <p>先测后谈已赢一半：拿着漏洞报告与克隆实证上桌，只签平价授权，把信任锚握在自己域名里。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<button class="arrow" id="prev" aria-label="上一页">‹</button>
+<button class="arrow" id="next" aria-label="下一页">›</button>
+
+<div id="dots"><span class="edge" style="display:none"></span></div>
+<div id="pageno"><b id="cur">1</b> / <span id="tot">1</span></div>
+<div id="hint">← → 翻页 · F 全屏</div>
+<div id="rotate-hint">横屏观看效果更佳</div>
+
+<script>
+
+(function(){
+  var sc   = document.getElementById('scroll');
+  var dots = document.getElementById('dots');
+  var cur  = document.getElementById('cur');
+  var tot  = document.getElementById('tot');
+  var bar  = document.getElementById('bar');
+  var pages = Array.prototype.slice.call(document.querySelectorAll('.page'));
+  var N = pages.length, i = 0;
+  var LS_KEY = 'thera-authnow-deck-page';
+
+  tot.textContent = N;
+
+  function fit(){
+    var phone = window.innerWidth <= 820 || window.innerHeight <= 500;
+    var s = phone ? window.innerWidth / 1920
+                  : Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+    document.documentElement.style.setProperty('--s', s);
+  }
+  fit();
+  window.addEventListener('resize', fit);
+  window.addEventListener('orientationchange', fit);
+
+  pages.forEach(function(p){
+    var c = document.createElement('div');
+    c.className = 'canvas';
+    while (p.firstChild) c.appendChild(p.firstChild);
+    p.appendChild(c);
+  });
+
+  function edge(txt, title, to){
+    var b = document.createElement('button');
+    b.className = 'edge'; b.textContent = txt; b.title = title;
+    b.onclick = function(){ go(to()); };
+    dots.appendChild(b);
+  }
+  edge('«', '第一页', function(){ return 0; });
+  pages.forEach(function(_, k){
+    var d = document.createElement('button');
+    d.className = 'd'; d.title = '第 ' + (k+1) + ' 页';
+    d.onclick = function(){ go(k); };
+    dots.appendChild(d);
+  });
+  edge('»', '末页', function(){ return N - 1; });
+  var dotEls = Array.prototype.slice.call(dots.querySelectorAll('.d'));
+
+  var snapTimer = null;
+  function glide(left, behavior){
+    sc.classList.add('freescroll');
+    sc.scrollTo({ left: left, behavior: behavior || 'smooth' });
+    clearTimeout(snapTimer);
+    snapTimer = setTimeout(function(){ sc.classList.remove('freescroll'); }, 700);
+  }
+  function go(n){
+    var from = i;
+    i = Math.max(0, Math.min(N - 1, n));
+    glide(i * sc.clientWidth, Math.abs(i - from) > 1 ? 'auto' : 'smooth');
+    sync();
+  }
+  function sync(){
+    dotEls.forEach(function(d, k){ d.classList.toggle('on', k === i); });
+    cur.textContent = i + 1;
+    document.getElementById('prev').disabled = (i === 0);
+    document.getElementById('next').disabled = (i === N - 1);
+    bar.style.width = ((i + 1) / N * 100) + '%';
+    try { localStorage.setItem(LS_KEY, String(i)); } catch(e){}
+  }
+
+  var raf = null;
+  sc.addEventListener('scroll', function(){
+    if (raf) return;
+    raf = requestAnimationFrame(function(){
+      raf = null;
+      var k = Math.round(sc.scrollLeft / Math.max(1, sc.clientWidth));
+      if (k !== i){ i = k; sync(); }
+      else { bar.style.width = ((sc.scrollLeft / Math.max(1, sc.scrollWidth - sc.clientWidth)) * 100 || 0) + '%'; }
+    });
+  }, { passive: true });
+
+  document.getElementById('prev').onclick = function(){ go(i - 1); };
+  document.getElementById('next').onclick = function(){ go(i + 1); };
+
+  document.addEventListener('keydown', function(e){
+    var k = e.key;
+    if (k === 'ArrowRight' || k === 'PageDown' || k === ' ') { e.preventDefault(); go(i + 1); }
+    else if (k === 'ArrowLeft' || k === 'PageUp') { e.preventDefault(); go(i - 1); }
+    else if (k === 'Home') { e.preventDefault(); go(0); }
+    else if (k === 'End')  { e.preventDefault(); go(N - 1); }
+    else if (k === 'f' || k === 'F') {
+      e.preventDefault();
+      if (document.fullscreenElement) document.exitFullscreen();
+      else document.documentElement.requestFullscreen();
+    }
+  });
+
+  var wheelAcc = 0, wheelIdle = null, wheelLock = 0;
+  sc.addEventListener('wheel', function(e){
+    if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
+    e.preventDefault();
+    var now = Date.now();
+    if (now < wheelLock) return;
+    wheelAcc += e.deltaY;
+    clearTimeout(wheelIdle);
+    wheelIdle = setTimeout(function(){ wheelAcc = 0; }, 220);
+    if (Math.abs(wheelAcc) < 90) return;
+    var dir = wheelAcc > 0 ? 1 : -1;
+    wheelAcc = 0;
+    i = Math.max(0, Math.min(N - 1, i + dir));
+    wheelLock = now + 600;
+    glide(i * sc.clientWidth, 'smooth');
+    sync();
+  }, { passive: false });
+
+  var down = false, sx = 0, sl = 0, moved = 0;
+  sc.addEventListener('pointerdown', function(e){
+    if (e.pointerType === 'touch') return;
+    if (e.target.closest('button')) return;
+    down = true; moved = 0; sx = e.clientX; sl = sc.scrollLeft;
+    sc.classList.add('dragging'); sc.setPointerCapture(e.pointerId);
+  });
+  sc.addEventListener('pointermove', function(e){
+    if (!down) return;
+    var dx = e.clientX - sx; moved = Math.max(moved, Math.abs(dx));
+    sc.scrollLeft = sl - dx;
+  });
+  function release(){
+    if (!down) return;
+    down = false; sc.classList.remove('dragging');
+    if (moved > 8) glide(Math.round(sc.scrollLeft / sc.clientWidth) * sc.clientWidth);
+  }
+  sc.addEventListener('pointerup', release);
+  sc.addEventListener('pointercancel', release);
+  sc.addEventListener('pointerleave', release);
+
+  var toc = document.getElementById('toc');
+  if (toc){
+    pages.forEach(function(p, k){
+      if (k === 1) return;
+      var h2 = p.querySelector('h2');
+      if (!h2) return;
+      var b = document.createElement('button');
+      b.innerHTML = '<span class="n">' + String(k+1).padStart(2,'0') + '</span>'
+                  + '<span class="t">' + h2.textContent + '</span>';
+      b.onclick = function(){ go(k); };
+      toc.appendChild(b);
+    });
+  }
+
+  var rh = document.getElementById('rotate-hint');
+  if (rh){
+    var killHint = function(){ rh.style.display = 'none'; };
+    sc.addEventListener('scroll', killHint, { once: true, passive: true });
+    sc.addEventListener('pointerdown', killHint, { once: true });
+    sc.addEventListener('touchstart', killHint, { once: true, passive: true });
+  }
+
+  var saved = 0;
+  try { saved = parseInt(localStorage.getItem(LS_KEY), 10) || 0; } catch(e){}
+  window.addEventListener('load', function(){
+    sc.scrollLeft = saved * sc.clientWidth;
+    i = saved; sync();
+  });
+  i = saved; sync();
+})();
+
+</script>
+</body>
+</html>
