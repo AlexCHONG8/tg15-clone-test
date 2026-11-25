@@ -25,7 +25,9 @@
     border-radius: 16px;
     overflow: hidden;
     box-shadow: 0 4px 24px rgba(45,42,51,.14);
+    position: relative;
   }
+  .chop { position: absolute; right: 16px; bottom: 12px; width: 122px; opacity: .92; }
   .strip { height: 6px; background: linear-gradient(90deg, #702785, #d19000); }
   .head {
     display: flex; align-items: center; gap: 12px;
@@ -77,7 +79,8 @@
   .row .k { color: #6b6472; }
   .row .v { font-weight: 700; text-align: right; }
   .chip { background: #e6f4ea; color: #1e8e3e; border-radius: 8px; padding: 2px 10px; font-size: 12px; font-weight: 700; }
-  .foot { padding: 14px 20px 20px; text-align: center; }
+  .foot { padding: 14px 20px 20px; display: flex; align-items: flex-end; gap: 10px; }
+  .foot .ftxt { flex: 1; text-align: center; }
   .foot .note { font-size: 10px; color: #9aa0ab; line-height: 1.55; }
   .foot .sig { font-size: 10px; color: #b7bcc5; margin-top: 8px; letter-spacing: .4px; }
 </style>
@@ -127,11 +130,16 @@
       <div class="row"><span class="k">Pluma</span><span class="v">Multtipen</span></div>
       <div class="row"><span class="k">Presentación</span><span class="v">60 mg / 3 mL</span></div>
       <div class="row"><span class="k">Fabricación por contrato</span><span class="v">Xamano Biotech</span></div>
+      <div class="row"><span class="k">Registro sanitario (demo)</span><span class="v">DINUVISA · N.º RS-DEMO-000</span></div>
     </div>
 
     <div class="foot">
-      <p class="note">Este código fue verificado contra el registro de lotes de NEOTYS.<br />Prototipo de demostración — no constituye certificación oficial.</p>
-      <p class="sig">NEOTYS™ concept · Xamano Biotech</p>
+      <div class="ftxt">
+        <p class="note">Este código fue verificado contra el registro de lotes de NEOTYS.<br />Prototipo de demostración — no constituye certificación oficial.</p>
+        <p class="note" style="margin-top:6px">El sello DINUVISA mostrado es una simulación gráfica (mockup) para el concepto NEOTYS: no es un sello oficial ni una autorización sanitaria real.</p>
+        <p class="sig">NEOTYS™ concept · Xamano Biotech</p>
+      </div>
+      <img class="chop" src="neotys-dinuvisa-chop.png" alt="Sello DINUVISA (simulación)" />
     </div>
   </div>
 
