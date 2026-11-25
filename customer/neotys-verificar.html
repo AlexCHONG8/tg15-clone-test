@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>Verificación de Autenticidad — NEOTYS</title>
+<meta name="robots" content="noindex,nofollow" />
+<link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet" />
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Roboto', Arial, sans-serif;
+    background: #f2f0f4;
+    color: #2d2a33;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+  }
+  .card {
+    background: #fff;
+    width: 100%;
+    max-width: 440px;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 24px rgba(45,42,51,.14);
+  }
+  .strip { height: 6px; background: linear-gradient(90deg, #702785, #d19000); }
+  .head {
+    display: flex; align-items: center; gap: 12px;
+    padding: 18px 20px 0;
+  }
+  .mark {
+    width: 44px; height: 44px; border-radius: 10px;
+    background: linear-gradient(135deg, #702785, #4a1a5c);
+    color: #e8b455; font-weight: 900; font-size: 17px;
+    display: flex; align-items: center; justify-content: center; letter-spacing: .5px;
+  }
+  .head .brand { font-size: 19px; font-weight: 900; letter-spacing: 2px; color: #4a1a5c; }
+  .head .brand small { display: block; font-size: 10px; font-weight: 500; color: #a07a3c; letter-spacing: 2px; }
+  .head .flag { margin-left: auto; font-size: 11px; color: #6b6472; border: 1px solid #ddd6e2; border-radius: 10px; padding: 2px 8px; }
+  .status { text-align: center; padding: 22px 20px 6px; }
+  .check {
+    width: 84px; height: 84px; margin: 0 auto 12px;
+    border-radius: 50%; background: #e6f4ea;
+    display: flex; align-items: center; justify-content: center;
+    animation: pop .45s cubic-bezier(.2,1.4,.4,1) both;
+  }
+  .check svg { width: 44px; height: 44px; }
+  @keyframes pop { from { transform: scale(0); } to { transform: scale(1); } }
+  .status h1 { font-size: 21px; font-weight: 900; color: #1e8e3e; letter-spacing: .5px; }
+  .status p { font-size: 13px; color: #6b6472; margin-top: 4px; }
+  .product {
+    display: flex; align-items: center; gap: 14px;
+    margin: 16px 20px 0; padding: 12px;
+    background: #faf6fb; border: 1px solid #e6dcee; border-radius: 12px;
+  }
+  .product img { width: 132px; object-fit: contain; }
+  .product .name { font-size: 18px; font-weight: 900; color: #4a1a5c; }
+  .product .form { font-size: 13px; color: #8a6b22; font-weight: 500; margin-top: 2px; }
+  .product .pack { font-size: 11px; color: #6b6472; margin-top: 4px; line-height: 1.45; }
+  .codes { display: flex; gap: 10px; margin: 16px 20px 0; }
+  .codes > div {
+    flex: 1; text-align: center;
+    border: 2px dashed #a3803a; border-radius: 12px; padding: 10px 6px;
+    background: #fffdf6;
+  }
+  .codes .label { font-size: 10px; font-weight: 700; letter-spacing: 2px; color: #8a6b22; }
+  .codes .value { font-size: 26px; font-weight: 900; letter-spacing: 2px; font-family: 'Roboto Mono', 'Courier New', monospace; margin-top: 2px; color: #3a2c46; }
+  .rows { margin: 16px 20px 0; }
+  .row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 10px 2px; border-bottom: 1px solid #f0edf3; font-size: 13px;
+  }
+  .row:last-child { border-bottom: none; }
+  .row .k { color: #6b6472; }
+  .row .v { font-weight: 700; text-align: right; }
+  .chip { background: #e6f4ea; color: #1e8e3e; border-radius: 8px; padding: 2px 10px; font-size: 12px; font-weight: 700; }
+  .foot { padding: 14px 20px 20px; text-align: center; }
+  .foot .note { font-size: 10px; color: #9aa0ab; line-height: 1.55; }
+  .foot .sig { font-size: 10px; color: #b7bcc5; margin-top: 8px; letter-spacing: .4px; }
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="strip"></div>
+    <div class="head">
+      <div class="mark">N</div>
+      <div class="brand">NEOTYS<small>VERIFICACIÓN</small></div>
+      <span class="flag">DEMO</span>
+    </div>
+
+    <div class="status">
+      <div class="check">
+        <svg viewBox="0 0 24 24" fill="none">
+          <path d="M20 6L9 17l-5-5" stroke="#1e8e3e" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <h1>PRODUCTO AUTÉNTICO</h1>
+      <p>El código coincide con un lote registrado de NEOTYS</p>
+    </div>
+
+    <div class="product">
+      <img src="neotys-pen.png" alt="Multtipen NEOTYS" />
+      <div>
+        <div class="name">NEOTYS</div>
+        <div class="form">Tirzepatida 60 mg / 3 mL</div>
+        <div class="pack">Pluma multidosis Multtipen<br />Un solo paciente · uso único</div>
+      </div>
+    </div>
+
+    <div class="codes">
+      <div>
+        <div class="label">LOTE</div>
+        <div class="value" id="lote">02/27</div>
+      </div>
+      <div>
+        <div class="label">VENCIMIENTO</div>
+        <div class="value" id="exp">02/29</div>
+      </div>
+    </div>
+
+    <div class="rows">
+      <div class="row"><span class="k">Estado</span><span class="v"><span class="chip">VERIFICADO ✓</span></span></div>
+      <div class="row"><span class="k">Fecha de verificación</span><span class="v" id="fecha">—</span></div>
+      <div class="row"><span class="k">Presentación</span><span class="v">60 mg / 3 mL</span></div>
+      <div class="row"><span class="k">Fabricación por contrato</span><span class="v">Summed Medtech</span></div>
+    </div>
+
+    <div class="foot">
+      <p class="note">Este código fue verificado contra el registro de lotes de NEOTYS.<br />Prototipo de demostración — no constituye certificación oficial.</p>
+      <p class="sig">NEOTYS™ concept · Summed Medtech</p>
+    </div>
+  </div>
+
+<script>
+(function () {
+  function q(name) {
+    var m = (location.search || '').match(new RegExp('[?&]' + name + '=([^&#?]+)'));
+    return m ? decodeURIComponent(m[1].replace(/\+/g, ' ')) : null;
+  }
+  var lote = q('lote'), exp = q('exp');
+  if (lote) document.getElementById('lote').textContent = lote;
+  if (exp)  document.getElementById('exp').textContent = exp;
+  try {
+    document.getElementById('fecha').textContent =
+      new Date().toLocaleString('es-ES', {
+        timeZone: 'Europe/Madrid',
+        day: '2-digit', month: '2-digit', year: 'numeric',
+        hour: '2-digit', minute: '2-digit'
+      });
+  } catch (e) {
+    document.getElementById('fecha').textContent = new Date().toLocaleString();
+  }
+})();
+</script>
+</body>
+</html>
